@@ -1,10 +1,42 @@
+import bigInt from 'big-integer'
+import { Api, TelegramClient } from 'telegram'
+
 export const WORK_STATUS = 1
 export const AFK_STATUS = 2
 export const SLEEP_STATUS = 3
 
-export function changeStatus() {
+const EMOJI_DOCUMENT_IDS = {
+  work: 5453998602038813466n,
+  sleep: 5429156240615810384n,
+  afk: 5431438062250892883n
+}
+
+export async function changeStatus(client: TelegramClient) {
   const now = new Date()
-  console.log(determineStatus(now))
+  const status = determineStatus(now)
+  switch(status) {
+    case WORK_STATUS:
+      setEmojiStatus(client, EMOJI_DOCUMENT_IDS.work)
+      break
+      
+    case SLEEP_STATUS:
+      setEmojiStatus(client, EMOJI_DOCUMENT_IDS.sleep)
+      break
+      
+    case AFK_STATUS:
+      setEmojiStatus(client, EMOJI_DOCUMENT_IDS.afk)
+      break
+  }
+}
+
+async function setEmojiStatus(client: TelegramClient, documentId: bigint) {
+  await client.invoke(
+    new Api.account.UpdateEmojiStatus({
+      emojiStatus: new Api.EmojiStatus({
+        documentId: bigInt(documentId)
+      })
+    })
+  )
 }
 
 const SATURDAY = 6

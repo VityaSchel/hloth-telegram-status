@@ -12,15 +12,14 @@ export default async function main() {
   const client = new TelegramClient(storeSession, Number(apiId), apiHash, {
     connectionRetries: 5,
   })
+
   await client.start(
     process.argv.includes('--interactive')
       ? INTERACTIVE_CLIENT
       : AUTOMATED_CLIENT
   )
-  console.log('You should now be connected.')
-  await client.sendMessage('me', { message: 'Hello!' })
-  
-  await changeStatus()
+
+  await changeStatus(client)
 }
 
 const INTERACTIVE_CLIENT = {
