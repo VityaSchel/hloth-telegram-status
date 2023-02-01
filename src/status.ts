@@ -16,15 +16,18 @@ export async function changeStatus(client: TelegramClient) {
   const status = determineStatus(now)
   switch(status) {
     case WORK_STATUS:
-      setEmojiStatus(client, EMOJI_DOCUMENT_IDS.work)
+      console.log('Status changed to "Work"')
+      await setEmojiStatus(client, EMOJI_DOCUMENT_IDS.work)
       break
       
     case SLEEP_STATUS:
-      setEmojiStatus(client, EMOJI_DOCUMENT_IDS.sleep)
+      console.log('Status changed to "Sleep"')
+      await setEmojiStatus(client, EMOJI_DOCUMENT_IDS.sleep)
       break
       
     case AFK_STATUS:
-      setEmojiStatus(client, EMOJI_DOCUMENT_IDS.afk)
+      console.log('Status changed to "AFK"')
+      await setEmojiStatus(client, EMOJI_DOCUMENT_IDS.afk)
       break
   }
 }

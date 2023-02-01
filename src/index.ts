@@ -18,8 +18,11 @@ export default async function main() {
       ? INTERACTIVE_CLIENT
       : AUTOMATED_CLIENT
   )
+  console.log('Logged in as hloth')
 
   await changeStatus(client)
+  await client.disconnect()
+  process.exit(0)
 }
 
 const INTERACTIVE_CLIENT = {
