@@ -54,7 +54,7 @@ export function determineStatus(now: Date): typeof WORK_STATUS | typeof AFK_STAT
 
   const dayOfWeek = now.getDay()
   const isWeekend = dayOfWeek === SATURDAY || dayOfWeek === SUNDAY
-  const isWorktime = now.getHours() > 14 && now.getHours() < 22
+  const isWorktime = now.getHours() > 15 && now.getHours() < 22
   if(isWeekend) {
     return AFK_STATUS
   } else if(isWorktime) {
