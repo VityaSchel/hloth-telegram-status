@@ -69,4 +69,4 @@ Every ½ hour:
 
 ## Funding
 
-Made in one hour, now [get me a job](hloth.dev).
+Made in one hour, now [get me a job](https://hloth.dev).
