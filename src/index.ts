@@ -1,17 +1,24 @@
 import './env.js'
 import { TelegramClient } from 'telegram'
-import { StoreSession } from 'telegram/sessions/index.js'
+import { StringSession } from 'telegram/sessions/index.js'
 import input from 'input'
 import { changeStatus } from './status.js'
+import fs from 'fs/promises'
+
+const __dirname = new URL('.', import.meta.url).pathname
+const sessionDataFilePath = __dirname + '.telegram_session'
 
 export default async function main() {
   const apiId = process.env.API_ID
   const apiHash = process.env.API_HASH as string
-  const storeSession = new StoreSession('.telegram_session')
+  const session = new StringSession(await fs.readFile(sessionDataFilePath, 'utf-8'))
 
-  const client = new TelegramClient(storeSession, Number(apiId), apiHash, {
+  const client = new TelegramClient(session, Number(apiId), apiHash, {
     connectionRetries: 5,
+    deviceModel: 'Emoji status bot'
   })
+
+  await fs.writeFile(sessionDataFilePath, session.save() as string, 'utf-8')
 
   await client.start(
     process.argv.includes('--interactive')
