@@ -24,14 +24,14 @@ export default async function main() {
     deviceModel: 'Emoji status bot'
   })
 
-  await fs.writeFile(sessionDataFilePath, session.save() as string, 'utf-8')
-
   await client.start(
     process.argv.includes('--interactive')
       ? INTERACTIVE_CLIENT
       : AUTOMATED_CLIENT
   )
   console.log('Logged in as hloth')
+  
+  await fs.writeFile(sessionDataFilePath, client.session.save() as unknown as string, 'utf-8')
 
   await changeStatus(client)
   await client.disconnect()
