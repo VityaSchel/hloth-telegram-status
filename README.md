@@ -36,8 +36,9 @@ TypeScript, SWC, Babel used in this project are self-explanatory.
 1. Clone this repository
 2. Install all dependencies (first install Node.js and npm if you don't have it)
 3. Build with SWC using `npm run build`
-4. Setup with `npm run start -- --interactive` (note both `--`), follow instructions in interactive prompt
-5. Add cronjob to execute this script every few hours, see examples below
+4. Fill .env file using example below
+5. Setup with `npm run start -- --interactive` (note both `--`), follow instructions in interactive prompt
+6. Add cronjob to execute this script every few hours, see examples below
 
 > **Warning**
 > Make sure to replace path to Node.js with yours. Use this command to get Node.js executable path: `which node`. 
@@ -62,6 +63,17 @@ Every ½ hour:
 ```
 
 [And so on...](https://crontab.guru/)
+
+## .env file
+
+Must be in project's root (not in src, not in out dirs)
+
+```env
+API_ID=
+API_HASH=
+```
+
+Obtain these secrets on [my.telegram.org](https://my.telegram.org)
 
 ## LICENSE
 
