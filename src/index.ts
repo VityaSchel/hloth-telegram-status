@@ -6,12 +6,18 @@ import { changeStatus } from './status.js'
 import fs from 'fs/promises'
 
 const __dirname = new URL('.', import.meta.url).pathname
-const sessionDataFilePath = __dirname + '.telegram_session'
+const sessionDataFilePath = __dirname + '../.telegram_session'
 
 export default async function main() {
   const apiId = process.env.API_ID
   const apiHash = process.env.API_HASH as string
-  const session = new StringSession(await fs.readFile(sessionDataFilePath, 'utf-8'))
+  const session = new StringSession(
+    await new Promise(resolve => {
+      fs.stat(sessionDataFilePath)
+        .catch(() => resolve(''))
+        .then(() => fs.readFile(sessionDataFilePath, 'utf-8').then(resolve))
+    })
+  )
 
   const client = new TelegramClient(session, Number(apiId), apiHash, {
     connectionRetries: 5,
